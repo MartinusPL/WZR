@@ -6,7 +6,7 @@ uczestnikami WZR, sterowanie wirtualnymi obiektami
 
 bool czy_opoznienia = 0;            // symulacja opóŸnieñ w sieci 
 bool czy_zmn_czestosc = 1;          // symulacja ograniczonej czêstoœci (przepustowoœci) wysy³ania ramek  
-bool czy_test_pred = 0;             // testowanie algorytmu predykcji bez udzia³u cz³owieka
+bool czy_test_pred = 1;             // testowanie algorytmu predykcji bez udzia³u cz³owieka
 
 #include <windows.h>
 #include <time.h>
@@ -217,15 +217,12 @@ void Cykl_WS()
   //    -------------------------------------
   // ----------------------------------------
   // ------------  Miejsce na predykcjê stanu:
-  for (int k=0;k<iLiczbaCudzychOb;k++)
+  for (int i=0;i<iLiczbaCudzychOb;i++)
   {
-
-
-
-
-
-
-
+		CudzeObiekty[i]->wPol =  CudzeObiekty[i]->wPol+ CudzeObiekty[i]->wV* fDt;
+		CudzeObiekty[i]->wV =  CudzeObiekty[i]->wV + CudzeObiekty[i]->wA *fDt;
+  
+		CudzeObiekty[i]->qOrient = CudzeObiekty[i]->qOrient * AsixToQuat(CudzeObiekty[i]->wV_kat, CudzeObiekty[i]->alfa);
   } 
 
 }
@@ -479,4 +476,8 @@ void KlawiszologiaSterowania(UINT kod_meldunku, WPARAM wParam, LPARAM lParam)
     }
 
   } // switch po komunikatach
+
+
 }
+
+
